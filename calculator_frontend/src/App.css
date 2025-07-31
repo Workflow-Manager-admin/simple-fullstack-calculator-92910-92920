@@ -1,104 +1,235 @@
-/* CSS Variables for Theme Management */
 :root {
-  /* Light theme colors */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8f9fa;
-  --text-primary: #282c34;
-  --text-secondary: #61dafb;
-  --border-color: #e9ecef;
-  --button-bg: #007bff;
-  --button-text: #ffffff;
+  /* Application palette from design requirements */
+  --primary: #1976d2;
+  --accent: #ff9800;
+  --secondary: #424242;
+  --bg: #f9faff;
+  --card-bg: #fff;
+  --border: #e3e7ef;
+  --error: #f44336;
+  --text: #232526;
+  --subtitle: #6b6f76;
 }
 
-[data-theme="dark"] {
-  /* Dark theme colors */
-  --bg-primary: #1a1a1a;
-  --bg-secondary: #282c34;
-  --text-primary: #ffffff;
-  --text-secondary: #61dafb;
-  --border-color: #404040;
-  --button-bg: #0056b3;
-  --button-text: #ffffff;
-}
-
+/* General app layout */
 .App {
-  text-align: center;
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
   min-height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  width: 100vw;
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Inter', 'Segoe UI', Arial, system-ui, sans-serif;
+  color: var(--text);
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: var(--bg-secondary);
-  min-height: 100vh;
+.calculator-root {
+  background: var(--card-bg);
+  padding: 2.5rem 2.5rem 1.6rem 2.5rem;
+  border-radius: 24px;
+  box-shadow: 0 4px 36px rgba(25, 118, 210, 0.05), 0 0.5px 2px rgba(67, 67, 67, 0.08);
+  min-width: 340px;
+  max-width: 95vw;
+  margin: 3rem auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: var(--text-primary);
-  transition: background-color 0.3s ease;
-  position: relative;
 }
 
-.App-link {
-  color: var(--text-secondary);
-  transition: color 0.3s ease;
+/* Typography */
+.title {
+  margin-bottom: 1.1rem;
+  margin-top: 0.4rem;
+  font-weight: 700;
+  font-size: 2.2rem;
+  letter-spacing: -1px;
+  color: var(--primary);
 }
-
-.theme-toggle {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: var(--button-bg);
-  color: var(--button-text);
-  border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
-  font-size: 14px;
+.subtitle {
+  margin: 0.6rem 0 0.3rem 0;
   font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--secondary);
+}
+.footer {
+  margin-top: 2.1rem;
+  color: var(--subtitle);
+  font-size: 0.99rem;
+  text-align: center;
+  letter-spacing: 0.05em;
+}
+
+/* Calculator Form Inputs */
+.calculator-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+.inputs-row {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+.calc-input {
+  width: 100px;
+  font-size: 1.26rem;
+  border: 1.7px solid var(--border);
+  border-radius: 7px;
+  padding: 0.5rem 0.75rem;
+  outline: none;
+  margin: 0 0.7rem;
+  transition: border-color 0.2s;
+  color: var(--text);
+  background: var(--bg);
+}
+
+.calc-input:focus {
+  border-color: var(--primary);
+}
+/* Operator buttons */
+.op-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
+  margin: 0 0.8rem;
+}
+.op-btn {
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--primary);
+  font-size: 1.2rem;
+  padding: 0.32rem 0.7rem;
+  border-radius: 7px;
+  font-weight: 700;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background 0.15s, color 0.18s, border 0.13s;
+}
+.op-btn:hover, .op-btn:focus {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+.op-active, .op-btn.op-active {
+  background: var(--primary)!important;
+  color: #fff!important;
+  border-color: var(--primary)!important;
+}
+.actions-row {
+  width: 100%;
+  margin-top: 1.1rem;
+  display: flex;
+  gap: 1.35rem;
+  justify-content: center;
+}
+.action-btn {
+  min-width: 92px;
+  padding: 0.475rem 0.2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: background 0.17s;
+  box-shadow: none;
+  outline: none;
+  letter-spacing: 0.02rem;
 }
 
-.theme-toggle:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  opacity: 0.9;
+/* Result zone */
+.result-area {
+  min-height: 46px;
+  margin: 1.3rem 0 1.05rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+.calc-result {
+  color: var(--primary);
+  font-size: 1.5rem;
+  font-weight: 700;
+  padding: 0.4rem 0;
+  display: flex;
+  gap: 0.45rem;
+  align-items: center;
+  border-radius: 7px;
+}
+.operation {
+  color: var(--secondary);
+}
+.equals,
+.result-number {
+  color: var(--primary);
 }
 
-.theme-toggle:active {
-  transform: translateY(0);
+/* Error display */
+.calc-error {
+  color: var(--error);
+  margin-bottom: 0.22rem;
+  margin-top: 0.14rem;
+  font-size: 1.03rem;
+  padding: 0.38rem 0.5rem;
+  border-radius: 6px;
+  background: #fff2f2;
+  border: 1px solid #ffd7d7;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.history-area {
+  width: 100%;
+  text-align: left;
+  margin-top: 0.7rem;
+}
+.history-list {
+  list-style: none;
+  margin: 0.3rem 0 0 0;
+  padding: 0;
+  max-height: 210px;
+  overflow-y: auto;
+}
+.history-list li {
+  display: flex;
+  gap: 0.55rem;
+  align-items: center;
+  padding: 0.29rem 0.15rem;
+  font-size: 1rem;
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
+}
+.history-list li:last-child {
+  border-bottom: none;
+}
+.history-operation.op {
+  color: var(--primary);
+  font-weight: 700;
+}
+.history-operation.res {
+  font-weight: 600;
+  color: var(--accent);
+}
+.history-operation.eq {
+  color: var(--secondary);
+}
+
+.history-empty,
+.history-loading {
+  font-size: 1.03rem;
+  color: var(--subtitle);
+  padding: 0.2rem 0.1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .calculator-root {
+    padding: 1.1rem 0.5rem 1rem 0.5rem;
+    min-width: 90vw;
   }
-  to {
-    transform: rotate(360deg);
+  .inputs-row {
+    flex-direction: column;
+    gap: 10px;
   }
-}
-
-/* Responsive design for mobile */
-@media (max-width: 768px) {
-  .theme-toggle {
-    top: 10px;
-    right: 10px;
-    padding: 8px 16px;
-    font-size: 12px;
+  .history-area {
+    font-size: 0.95rem;
   }
 }
